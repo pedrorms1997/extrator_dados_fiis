@@ -1,0 +1,189 @@
+/* Fundo da página preto */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #000; /* Fundo preto */
+    color: white; /* Texto branco */
+}
+
+.container {
+    padding: 20px;
+}
+
+/* Título */
+h1 {
+    text-align: center;
+    color: #00ff00; /* Verde fluorescente */
+    margin-bottom: 30px;
+}
+
+/* Botões com degradê */
+button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background: linear-gradient(90deg, #28a745, #218838); /* Degradê verde */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: linear-gradient(90deg, #218838, #28a745); /* Inverte o degradê no hover */
+    transform: scale(1.05); /* Aumenta levemente o botão */
+}
+
+/* Botões de exportação */
+.export-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Espaço entre os botões */
+}
+
+.export-buttons button {
+    padding: 10px 15px;
+    font-size: 14px;
+    background: linear-gradient(90deg, #17a2b8, #138496); /* Degradê azul */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.export-buttons button:hover {
+    background: linear-gradient(90deg, #138496, #17a2b8); /* Inverte o degradê no hover */
+    transform: scale(1.05); /* Leve aumento no hover */
+}
+
+/* Filtros */
+#filtros {
+    display: flex; /* Alinha os filtros em linha */
+    flex-wrap: wrap; /* Permite quebra de linha se necessário */
+    gap: 20px; /* Espaçamento entre os filtros */
+    margin-bottom: 20px; /* Espaço entre os filtros e a tabela */
+}
+
+#filtros input {
+    width: 150px; /* Largura fixa */
+    padding: 8px; /* Espaço interno */
+    border: 1px solid #555; /* Bordas */
+    border-radius: 5px; /* Bordas arredondadas */
+    background-color: #333; /* Fundo escuro */
+    color: white; /* Texto branco */
+}
+
+#filtros input::placeholder {
+    color: #aaa; /* Cor do placeholder */
+}
+
+/* Área de scroll para a tabela */
+.tabela-scroll {
+    max-width: 100%;
+    overflow-x: auto; /* Scroll horizontal */
+    max-height: 500px; /* Altura máxima para scroll vertical */
+    overflow-y: auto; /* Scroll vertical */
+    border: 1px solid #444; /* Bordas da área de scroll */
+    margin: 0 auto; /* Centraliza horizontalmente */
+    scrollbar-color: #222 #111; /* Personalização básica */
+    scrollbar-width: thin; /* Scroll mais fino */
+}
+
+/* Estilo do scroll */
+.tabela-scroll::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+.tabela-scroll::-webkit-scrollbar-track {
+    background: #111; /* Fundo do track */
+    border-radius: 10px;
+}
+
+.tabela-scroll::-webkit-scrollbar-thumb {
+    background: #222; /* Cor do scroll */
+    border-radius: 10px;
+}
+
+.tabela-scroll::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(90deg, #28a745, #218838); /* Degradê verde no hover */
+}
+
+/* Estilização da tabela */
+.table {
+    width: 100%;
+    margin: 0;
+    border-collapse: collapse;
+    text-align: center; /* Centraliza o texto */
+    color: white; /* Texto branco */
+    background-color: #222; /* Fundo da tabela escuro */
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Sombra elegante */
+}
+
+.table th, .table td {
+    border: 1px solid #444; /* Bordas cinza escuro */
+    padding: 10px;
+    text-align: center; /* Centraliza o texto */
+}
+
+/* Cabeçalho da tabela */
+.table th {
+    background-color: #444; /* Fundo do cabeçalho */
+    font-weight: bold; /* Texto em negrito */
+    font-size: 18px; /* Tamanho da fonte */
+    text-transform: uppercase; /* Letras maiúsculas */
+    padding: 12px; /* Espaçamento interno */
+    border-bottom: 2px solid #555; /* Bordas inferiores para destaque */
+    color: white; /* Texto branco */
+}
+
+/* Fundo alternado para linhas da tabela */
+.table tr:nth-child(even) {
+    background-color: #333; /* Fundo para linhas pares */
+}
+
+.table tr:nth-child(odd) {
+    background-color: #222; /* Fundo para linhas ímpares */
+}
+
+/* Hover para linhas da tabela */
+.table tr:hover {
+    background-color: #555; /* Fundo mais claro ao passar o mouse */
+    cursor: pointer; /* Cursor de mão ao passar sobre a linha */
+}
+
+/* Links dentro da tabela */
+.table a {
+    text-decoration: none; /* Remove sublinhado */
+    color: white; /* Texto branco */
+}
+
+.table a:hover {
+    text-decoration: underline; /* Adiciona sublinhado ao passar o mouse */
+}
+
+/* Footer */
+footer {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #111; /* Fundo do footer */
+    text-align: center;
+    color: #aaa; /* Texto cinza claro */
+    font-size: 14px;
+    border-top: 1px solid #444; /* Linha superior */
+}
+
+footer a {
+    color: #17a2b8; /* Cor dos links */
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline; /* Sublinhar ao passar o mouse */
+}

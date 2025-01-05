@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIIs Data</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Extração da tabela de FIIs</h1>
+        <button id="atualizar-btn">Atualizar Dados dos FIIs</button>
+        <div class="export-buttons">
+            <button id="exportar-csv-btn">Exportar para CSV</button>
+            <button id="exportar-xlsx-btn">Exportar para XLSX</button>
+        </div>
+
+        <!-- Filtros -->
+        <div id="filtros" style="margin-top: 20px;">
+            <!-- Inputs de filtro serão gerados dinamicamente -->
+        </div>
+
+        <!-- Tabela -->
+        <div id="tabela-container" class="tabela-scroll" style="margin-top: 20px;">
+            <!-- Aqui será inserida a tabela extraída -->
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Desenvolvido por <strong>Pedro RMS</strong> | Contato: <a href="mailto:pedrorms.contato@gmail.com">pedrorms.contato@gmail.com</a></p>
+        <p>Os dados são extraídos do site <a href="https://www.fundsexplorer.com.br/ranking" target="_blank">Funds Explorer</a></p>
+    </footer>
+
+    <script>
+        document.getElementById("atualizar-btn").addEventListener("click", () => {
+            const tabelaContainer = document.getElementById("tabela-container");
+
+            // Insere o GIF de loading
+            tabelaContainer.innerHTML = `
+                <div style="text-align: center;">
+                    <img src="/static/loading.gif" alt="Carregando..." style="width: 50px; height: 50px;">
+                </div>
+            `;
+
+            fetch("/atualizar")
+                .then((response) => response.text())
+                .then((html) => {
+                    tabelaContainer.innerHTML = html;
+
+                    // Após carregar a tabela, gerar os filtros
+                    const tabela = document.querySelector("table");
+                    if (tabela) {
+                        gerarFiltros();
+                    } else {
+                        console.error("Tabela não encontrada.");
+                    }
+                })
+                .catch((error) => {
+                    tabelaContainer.innerHTML = `<p>Erro ao conectar ao servidor: ${error}</p>`;
+                });
+        });
+
+        document.getElementById("exportar-csv-btn").addEventListener("click", () => {
+            window.location.href = "/exportar/csv";
+        });
+
+        document.getElementById("exportar-xlsx-btn").addEventListener("click", () => {
+            window.location.href = "/exportar/xlsx";
+        });
+
+        function gerarFiltros() {
+            const tabela = document.querySelector("table");
+            if (!tabela) return;
+
+            const colunas = Array.from(tabela.querySelectorAll("thead th"));
+            const filtrosContainer = document.getElementById("filtros");
+            filtrosContainer.innerHTML = ""; // Limpa filtros anteriores
+
+            colunas.forEach((coluna, index) => {
+                const celulaExemplo = tabela.querySelector(`tbody tr td:nth-child(${index + 1})`);
+                const conteudoCelula = celulaExemplo ? celulaExemplo.textContent.trim().replace(/[^\d.-]/g, "") : "";
+                const isNumeric = !isNaN(parseFloat(conteudoCelula)) && isFinite(conteudoCelula);
+
+                if (isNumeric) {
+                    const inputMin = document.createElement("input");
+                    const inputMax = document.createElement("input");
+
+                    inputMin.type = "number";
+                    inputMin.placeholder = `Min ${coluna.textContent}`;
+                    inputMin.dataset.colIndex = index;
+                    inputMin.style.marginRight = "5px";
+                    inputMin.addEventListener("input", aplicarFiltros);
+
+                    inputMax.type = "number";
+                    inputMax.placeholder = `Max ${coluna.textContent}`;
+                    inputMax.dataset.colIndex = index;
+                    inputMax.addEventListener("input", aplicarFiltros);
+
+                    filtrosContainer.appendChild(inputMin);
+                    filtrosContainer.appendChild(inputMax);
+                } else {
+                    const input = document.createElement("input");
+                    input.type = "text";
+                    input.placeholder = `Filtrar ${coluna.textContent}`;
+                    input.dataset.colIndex = index;
+                    input.addEventListener("input", aplicarFiltros);
+                    filtrosContainer.appendChild(input);
+                }
+            });
+        }
+
+        function aplicarFiltros() {
+            const tabela = document.querySelector("table");
+            const linhas = Array.from(tabela.querySelectorAll("tbody tr"));
+
+            linhas.forEach((linha) => {
+                linha.style.display = ""; // Exibe todas as linhas inicialmente
+
+                const celulas = Array.from(linha.querySelectorAll("td"));
+                const filtros = document.querySelectorAll("#filtros input");
+
+                filtros.forEach((filtro) => {
+                    const colIndex = filtro.dataset.colIndex;
+                    const celula = celulas[colIndex];
+                    if (!celula) return;
+
+                    const valorCelula = parseFloat(celula.textContent.replace(/[^\d.-]/g, "")) || 0;
+
+                    if (filtro.type === "number") {
+                        const isMin = filtro.placeholder.includes("Min");
+                        const isMax = filtro.placeholder.includes("Max");
+                        const valorFiltro = parseFloat(filtro.value);
+
+                        if (isMin && valorFiltro && valorCelula < valorFiltro) {
+                            linha.style.display = "none";
+                        }
+
+                        if (isMax && valorFiltro && valorCelula > valorFiltro) {
+                            linha.style.display = "none";
+                        }
+                    }
+
+                    if (filtro.type === "text") {
+                        const valorFiltro = filtro.value.toLowerCase();
+                        if (!celula.textContent.toLowerCase().includes(valorFiltro)) {
+                            linha.style.display = "none";
+                        }
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>
