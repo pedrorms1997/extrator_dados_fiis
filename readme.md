@@ -3,7 +3,12 @@
 ```markdown
 # Extrator de Dados de FIIs
 
-Este projeto é uma aplicação web desenvolvida para extrair, exibir e filtrar dados de FIIs diretamente do site [Funds Explorer](https://www.fundsexplorer.com.br/ranking). Ele oferece funcionalidades como filtros dinâmicos, exportação de dados para CSV e XLSX, além de uma interface elegante e responsiva.
+Este projeto é uma aplicação web desenvolvida para extrair, 
+exibir e filtrar dados de FIIs diretamente do site 
+[Funds Explorer](https://www.fundsexplorer.com.br/ranking). 
+Ele oferece funcionalidades como filtros dinâmicos, 
+exportação de dados para CSV e XLSX, além de uma interface 
+elegante e responsiva.
 
 ---
 
@@ -16,7 +21,8 @@ Este projeto é uma aplicação web desenvolvida para extrair, exibir e filtrar 
 
 - **HTML/CSS/JavaScript**: Interface do usuário.
   - Design responsivo e moderno.
-  - Funcionalidades como geração de filtros dinâmicos e exportação de dados com JavaScript.
+  - Funcionalidades como geração de filtros dinâmicos e exportação 
+  de dados com JavaScript.
 
 ---
 
